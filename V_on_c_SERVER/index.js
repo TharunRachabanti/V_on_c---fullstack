@@ -34,3 +34,56 @@ app.post("/api/add_product",(req, res)=>{
 
     });
 })
+
+
+// get api
+
+app.get("/api/get_product",(req,res)=>{
+    if(productData.length>0){
+        res.status(200).send({
+            'status_code' : 200,
+            'products': productData
+        });
+
+    }else{
+        res.status(200).send({
+            'status_code' : 200,
+            'products': []
+        });
+
+
+    }
+
+})
+
+//update api put
+
+app.put("/api/update/:id",(req,res)=>{
+    let id = req.params.id*1;
+    let productToUpdate = productData.find(p=>p.id === id);
+    let index = productData.indexOf(productToUpdate);
+
+    productData[index] = req.body;
+
+    res.status(200).send({
+        'status': "success",
+        'message': "Product updated"
+
+    })
+})
+
+//delete api
+app.delete("/api/delete/:id", (req,res)=>{
+    let id = req.params.id*1;
+    let productToUpdate = productData.find(p=>p.id === id);
+    let index = productData.indexOf(productToUpdate);
+
+    productData.splice(index, 1);
+
+    res.status(204).send({
+        'status':'success',
+        'message':"product deleted"
+    })
+})
+
+
